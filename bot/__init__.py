@@ -15,7 +15,7 @@ from socket import setdefaulttimeout
 from logging import getLogger, FileHandler, StreamHandler, INFO, basicConfig, error, info, warning, Formatter, ERROR
 from uvloop import install
 from aiohttp import web
-from .route import routes
+from route import routes
 
 
 async def web_server():
