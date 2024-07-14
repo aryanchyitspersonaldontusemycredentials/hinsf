@@ -14,7 +14,14 @@ from faulthandler import enable as faulthandler_enable
 from socket import setdefaulttimeout
 from logging import getLogger, FileHandler, StreamHandler, INFO, basicConfig, error, info, warning, Formatter, ERROR
 from uvloop import install
+from aiohttp import web
+from .route import routes
 
+
+async def web_server():
+    web_app = web.Application(client_max_size=30000000)
+    web_app.add_routes(routes)
+    return web_app
 faulthandler_enable()
 install()
 setdefaulttimeout(600)
