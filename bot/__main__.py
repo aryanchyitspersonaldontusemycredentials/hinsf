@@ -9,6 +9,8 @@ from base64 import b64decode
 from quoters import Quote
 from html import escape
 from cloudscraper import create_scraper
+from aiohttp import web
+from bot.__init__ import web_server
 
 from requests import get as rget
 from pytz import timezone
@@ -110,6 +112,11 @@ async def stats(_, message):
 @new_thread
 async def start(client, message):
     buttons = ButtonMaker()
+    
+    app = web.AppRunner(await web_server())
+    await app.setup()
+    bind_address = "0.0.0.0"
+    await web.TCPSite(app, bind_address, 80).start()
     reply_markup = buttons.build_menu(2)
     if len(message.command) > 1 and message.command[1] == "private":
         await deleteMessage(message)
